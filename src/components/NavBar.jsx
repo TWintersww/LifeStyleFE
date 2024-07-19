@@ -3,8 +3,8 @@ import BarItem from "./BarItem"
 const NavBar = () => {
 
   return (
-    <div className='navbar'>
-      <BarItem title='Home' to='/'/>
+    <div className="h-screen flex flex-col justify-between p-4 bg-gray-200">
+      <BarItem title='Home' to='/' />
       <BarItem title='ToDo' to='/todo'/>
       <BarItem title='Calendar' to='/calendar'/>
       <BarItem title='Nutrition' to='/nutrition'/>

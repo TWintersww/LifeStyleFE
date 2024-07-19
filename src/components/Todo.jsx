@@ -9,21 +9,27 @@ const Todo = () => {
   // console.log(tasks)
 
   return (
-    <div className='todoContainer'>
-      <div className='todo'>
-        todo
+    <div className="w-full flex justify-between p-4">
+      <div className="flex-1">
+        <h2 className="text-2xl font-bold mb-4">
+          todo
+        </h2>
 
         <TodoForm />
         <TodoList status='todo'/>
 
       </div>
-      <div className='completed'>
-        completed
+      <div className="flex-1">
+        <h2 className="text-2xl font-bold mb-4">
+          completed
+        </h2>
 
         <TodoList status='completed'/>
       </div>
-      <div className='logging'>
-        logging
+      <div className="flex-1">
+        <h2 className="text-2xl font-bold mb-4">
+          logging
+        </h2>
       </div>
     </div>
   )

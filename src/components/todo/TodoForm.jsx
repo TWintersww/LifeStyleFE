@@ -20,14 +20,15 @@ const TodoForm = () => {
   return (
     <form onSubmit={handleFormSubmit}>
       <div>
-        task
-        <input type='text' name='taskName'/>
+        <label className="block text-gray-700 mb-2">task</label>
+        <input type='text' name='taskName' className="w-full p-2 border border-gray-300 rounded"/>
       </div>
       <div>
-        details
-        <input type='text' name='description'/>
+        <label className="block text-gray-700 mb-2">details</label>
+        {/* <input type='text' name='description'/> */}
+        <textarea className="w-full p-2 border border-gray-300 rounded"></textarea>
       </div>
-      <button type='submit'>
+      <button type='submit' className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
         add
       </button>
     </form>

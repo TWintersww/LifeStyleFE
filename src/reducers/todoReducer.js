@@ -19,6 +19,12 @@ const initialState = {
       description: 'add connections',
       status: 'completed',
       id: 3
+    },
+    {
+      taskName: 'veryveryverylonglonglonglongname',
+      description: 'veryveryverylongdescription veryveryverylongdescription veryveryverylongdescriptionveryveryverylongdescription veryveryverylongdescription veryveryverylongdescription',
+      status: 'completed',
+      id: 4
     }
   ]
 }
@@ -47,14 +53,10 @@ const todoSlice = createSlice({
       })
     },
     editTask(state, action) {
-      const oldTask = action.payload
-      // console.log(oldTask)
-      const editedTask = {
-        ...oldTask,
-        taskName: oldTask.taskName+'a'
-      }
+      const editedTask = action.payload
+      console.log(editedTask)
       state.tasks = state.tasks.map(t => {
-        return (t.id === oldTask.id) 
+        return (t.id === editedTask.id) 
           ? editedTask
           : t
       })
