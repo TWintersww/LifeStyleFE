@@ -1,14 +1,13 @@
 import { useState } from "react"
 
 
-import TodoItemModal from "./TodoItemModel"
+import TodoItemModal from "./TodoItemModal"
 
 const TodoItem = ({t}) => {
   // const dispatch = useDispatch()
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
 
   const toggleOverlay = () => {
-    // console.log('clicked')
     setIsOverlayOpen(!isOverlayOpen)
   }
 

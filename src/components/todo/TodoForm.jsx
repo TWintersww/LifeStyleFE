@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { createTask } from "../../reducers/todoReducer"
+import { handleCreateTask } from "../../reducers/todoReducer"
 
 const TodoForm = () => {
   const dispatch = useDispatch()
@@ -7,9 +7,10 @@ const TodoForm = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault()
     dispatch(
-      createTask({
+      handleCreateTask({
         taskName: e.target.taskName.value,
-        description: e.target.description.value
+        description: e.target.description.value,
+        status: "todo"
       })
     )
 
@@ -25,8 +26,7 @@ const TodoForm = () => {
       </div>
       <div>
         <label className="block text-gray-700 mb-2">details</label>
-        {/* <input type='text' name='description'/> */}
-        <textarea className="w-full p-2 border border-gray-300 rounded"></textarea>
+        <textarea name='description' className="w-full p-2 border border-gray-300 rounded"></textarea>
       </div>
       <button type='submit' className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
         add

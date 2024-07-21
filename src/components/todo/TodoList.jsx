@@ -4,7 +4,7 @@ import { getTasksByStatus } from "../../selectors/todoSelectors"
 
 const TodoList = ({status}) => {
   const tasks = useSelector(state => getTasksByStatus(state, status))
-  console.log('TodoList tasks:', tasks)
+  console.log(`TodoList ${status} tasks:`, tasks)
 
   return (
     <div>

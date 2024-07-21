@@ -1,12 +1,17 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { createTask } from '../reducers/todoReducer'
+import { initializeTasks } from '../reducers/todoReducer'
 import TodoForm from './todo/TodoForm'
 import TodoList from './todo/TodoList'
+import { useEffect } from 'react'
+
 
 const Todo = () => {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   // const tasks = useSelector(state => state.todo.tasks)
   // console.log(tasks)
+  useEffect(() => {
+    dispatch(initializeTasks())
+  }, [])
 
   return (
     <div className="w-full flex justify-between p-4">

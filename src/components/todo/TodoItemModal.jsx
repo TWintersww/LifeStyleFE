@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import { useDispatch } from "react-redux"
-import { deleteTask, editTask, markComplete } from "../../reducers/todoReducer"
+import { handleDeleteTask, handleMarkComplete, handleEditTask } from "../../reducers/todoReducer"
 import { useState } from "react"
 
 
@@ -11,25 +11,25 @@ const TodoItemModal = ({t, toggleOverlay}) => {
   const [taskName, setTaskName] = useState(t.taskName)
   const [description, setDescription] = useState(t.description)
 
-  console.log(taskName)
-  console.log(description)
+  // console.log(taskName)
+  // console.log(description)
 
-  const handleMarkComplete = () => {
+  const handleMC = () => {
     toggleOverlay()
-    dispatch(markComplete(t))
+    dispatch(handleMarkComplete(t))
   }
-  const handleDeleteTask = () => {
+  const handleDelete = () => {
     toggleOverlay()
-    dispatch(deleteTask(t.id))
+    dispatch(handleDeleteTask(t.id))
   }
-  const handleEditTask = () => {
+  const handleEdit = () => {
     toggleOverlay()
     const editedTask = {
       ...t,
       taskName: taskName,
       description: description
     }
-    dispatch(editTask(editedTask))
+    dispatch(handleEditTask(editedTask))
   }
 
   return (
@@ -52,14 +52,14 @@ const TodoItemModal = ({t, toggleOverlay}) => {
               <div>
                 <button
                   className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm w-12 h-12 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  onClick={handleDeleteTask}
+                  onClick={handleDelete}
                 >
                   <FontAwesomeIcon icon={faTrash}/>
                 </button>
                 <button
                   className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button"
-                  onClick={handleMarkComplete}
+                  onClick={handleMC}
                 >
                   Mark Complete
                 </button>
@@ -88,7 +88,7 @@ const TodoItemModal = ({t, toggleOverlay}) => {
               <button
                 className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 flex-1"
                 type="button"
-                onClick={handleEditTask}
+                onClick={handleEdit}
               >
                 Save Changes
               </button>
