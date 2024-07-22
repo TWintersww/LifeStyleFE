@@ -50,10 +50,9 @@ export const handleCreateTask = (newTask) => {
 }
 export const handleDeleteTask = (id) => {
   return async dispatch => {
-    // console.log('to delete id:', id)
-    const deletedTask = await tasksService.deleteOne(id)
-    console.log('deletedTask:', deletedTask)
-    dispatch(deleteTask(deletedTask.id))
+    console.log('to delete id:', id)
+    await tasksService.deleteOne(id)
+    dispatch(deleteTask(id))
   }
 }
 export const handleMarkComplete = (oldTask) => {

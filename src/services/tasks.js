@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseURL = 'http://localhost:3001/tasks'
+const baseURL = 'http://localhost:3001/api/tasks'
 
 const getAll = async () => {
   const response = await axios.get(baseURL)
@@ -15,7 +15,7 @@ const postNew = async (newTask) => {
 
 const deleteOne = async (id) => {
   const response = await axios.delete(`${baseURL}/${id}`)
-  // console.log('deleteOne response:', response)
+  console.log('deleteOne response:', response)
   return response.data
 }
 
