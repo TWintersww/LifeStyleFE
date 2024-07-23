@@ -3,12 +3,14 @@ import { initializeTasks } from '../reducers/todoReducer'
 import TodoForm from './todo/TodoForm'
 import TodoList from './todo/TodoList'
 import { useEffect } from 'react'
+import { getFormattedCurrentDate } from '../selectors/todoSelectors'
+import { isSameDay } from 'date-fns'
 
 
 const Todo = () => {
   const dispatch = useDispatch()
-  // const tasks = useSelector(state => state.todo.tasks)
-  // console.log(tasks)
+  const currentDate = useSelector(getFormattedCurrentDate)
+  
   useEffect(() => {
     dispatch(initializeTasks())
   }, [])
@@ -20,7 +22,12 @@ const Todo = () => {
           todo
         </h2>
 
-        <TodoForm />
+        {/* Only show TodoForm if currentDate same as today's date */}
+        {
+          isSameDay(currentDate, new Date())
+          &&
+          <TodoForm />
+        }
         <TodoList status='todo'/>
 
       </div>

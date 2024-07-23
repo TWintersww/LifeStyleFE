@@ -10,7 +10,8 @@ const TodoForm = () => {
       handleCreateTask({
         taskName: e.target.taskName.value,
         description: e.target.description.value,
-        status: "todo"
+        status: "todo",
+        createDate: new Date(),
       })
     )
 

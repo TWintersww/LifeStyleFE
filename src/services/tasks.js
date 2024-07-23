@@ -1,5 +1,6 @@
 import axios from 'axios'
-const baseURL = 'http://localhost:3001/api/tasks'
+// const baseURL = 'http://localhost:3001/api/tasks'
+const baseURL = 'api/tasks'
 
 const getAll = async () => {
   const response = await axios.get(baseURL)
@@ -22,7 +23,7 @@ const deleteOne = async (id) => {
 const editOne = async (editedTask) => {
   const id = editedTask.id
   const response = await axios.put(`${baseURL}/${id}`, editedTask)
-  // console.log('editOne response:', response)
+  console.log('editOne response:', response)
   return response.data
 }
 

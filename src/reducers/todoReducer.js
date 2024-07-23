@@ -1,39 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
 import tasksService from '../services/tasks'
-import tasks from "../services/tasks"
+import { addDays } from "date-fns"
 
-// const initialState = {
-//   tasks: [
-//     {
-//       taskName: "leetcode",
-//       description: "lc50",
-//       status: 'todo',
-//       id: 1
-//     },
-//     {
-//       taskName: 'webdev',
-//       description: 'fso part 5',
-//       status: 'todo',
-//       id: 2
-//     },
-//     {
-//       taskName: 'linkedin',
-//       description: 'add connections',
-//       status: 'completed',
-//       id: 3
-//     },
-//     {
-//       taskName: 'veryveryverylonglonglonglongname',
-//       description: 'veryveryverylongdescription veryveryverylongdescription veryveryverylongdescriptionveryveryverylongdescription veryveryverylongdescription veryveryverylongdescription',
-//       status: 'completed',
-//       id: 4
-//     }
-//   ]
-// }
 
-const getRandNum = () => {
-  return Math.floor(Math.random() * 10000)
-}
 export const initializeTasks = () => {
   return async dispatch => {
     const init = await tasksService.getAll()
@@ -42,9 +11,9 @@ export const initializeTasks = () => {
 }
 export const handleCreateTask = (newTask) => {
   return async dispatch => {
-    // console.log('newTask:', newTask)
+    console.log('newTask:', newTask)
     const postedTask = await tasksService.postNew(newTask)
-    // console.log('postedTask:', postedTask)
+    console.log('postedTask:', postedTask)
     dispatch(createTask(postedTask))
   }
 }
@@ -74,11 +43,26 @@ export const handleEditTask = (editedTask) => {
     dispatch(editTask(editedPostedTask))
   }
 }
+export const handleNextDay = () => {
+  return async (dispatch, getState) => {
+    const currentDate = getState().todo.currentDate
+    const updatedCurrentDate = addDays(new Date(currentDate), 1).toISOString()
+    dispatch(setDate(updatedCurrentDate))
+  }
+}
+export const handlePrevDay = () => {
+  return async (dispatch, getState) => {
+    const currentDate = getState().todo.currentDate
+    const updatedCurrentDate = addDays(new Date(currentDate), -1).toISOString()
+    dispatch(setDate(updatedCurrentDate))
+  }
+}
 
 const todoSlice = createSlice({
   name: 'todo',
   initialState: {
-    tasks: []
+    tasks: [],
+    currentDate: new Date().toISOString(),
   },
   reducers: {
     setTasks(state, action) {
@@ -104,6 +88,10 @@ const todoSlice = createSlice({
           : t
       })
     },
+
+    setDate(state, action) {
+      state.currentDate = action.payload
+    },
   }
 })
 
@@ -111,6 +99,7 @@ export const {
   setTasks,
   createTask, 
   deleteTask, 
-  editTask
+  editTask,
+  setDate
 } = todoSlice.actions
 export default todoSlice.reducer
