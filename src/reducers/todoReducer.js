@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import tasksService from '../services/tasks'
-import { addDays } from "date-fns"
+import { addDays, startOfDay } from "date-fns"
 
 
 export const initializeTasks = () => {
@@ -62,6 +62,7 @@ const todoSlice = createSlice({
   name: 'todo',
   initialState: {
     tasks: [],
+    //currentDate needs to be in string format
     currentDate: new Date().toISOString(),
   },
   reducers: {

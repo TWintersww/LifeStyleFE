@@ -10,6 +10,7 @@ const TodoItemModal = ({t, toggleOverlay}) => {
 
   const [taskName, setTaskName] = useState(t.taskName)
   const [description, setDescription] = useState(t.description)
+  const [hoursSpent, setHoursSpent] = useState(t.hoursSpent || 0)
 
   // console.log(taskName)
   // console.log(description)
@@ -27,7 +28,8 @@ const TodoItemModal = ({t, toggleOverlay}) => {
     const editedTask = {
       ...t,
       taskName: taskName,
-      description: description
+      description: description,
+      hoursSpent: hoursSpent,
     }
     dispatch(handleEditTask(editedTask))
   }
@@ -37,7 +39,11 @@ const TodoItemModal = ({t, toggleOverlay}) => {
       <div
         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
       >
-        <div className="relative w-3/4 my-6 mx-auto max-w-6xl">
+        <div className="flex relative w-3/4 my-6 mx-auto max-w-6xl">
+          {/* <div className="bg-gray-400">
+            sidebar
+          </div> */}
+
           {/*content*/}
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
             {/*header*/}
@@ -68,7 +74,7 @@ const TodoItemModal = ({t, toggleOverlay}) => {
               </div>
             </div>
             {/*body*/}
-            <div className="relative p-6 flex-auto">
+            <div className="relative p-6 flex-auto border-b">
               <textarea 
                 className="w-full p-2 border border-gray-300 rounded"
                 value={description}
@@ -78,6 +84,21 @@ const TodoItemModal = ({t, toggleOverlay}) => {
 
               </textarea>
             </div>
+            {/*ONLY COMPLETED: time spent*/}
+            { t.status === 'completed' && 
+              <div className="relative w-full px-6 py-2 flex-auto">
+                <span className="pr-2">
+                  Hours spent: 
+                </span>
+                <input 
+                  type='text' 
+                  name='hoursSpent' 
+                  value={hoursSpent} 
+                  onChange={e => setHoursSpent(Number(e.target.value))}
+                  className="border border-gray-300 p-2 rounded box-border flex-grow mr-4 w-12"
+                />
+              </div>
+            }
             {/*footer*/}
             <div className="flex items-center justify-between p-6 border-t border-solid border-blueGray-200 rounded-b">
               <button

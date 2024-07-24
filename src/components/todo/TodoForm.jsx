@@ -1,38 +1,29 @@
-import { useDispatch } from "react-redux"
-import { handleCreateTask } from "../../reducers/todoReducer"
+import { useState } from "react"
+import TodoFormModal from "./TodoFormModal"
 
 const TodoForm = () => {
-  const dispatch = useDispatch()
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false)
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault()
-    dispatch(
-      handleCreateTask({
-        taskName: e.target.taskName.value,
-        description: e.target.description.value,
-        status: "todo",
-        createDate: new Date(),
-      })
-    )
-
-    e.target.taskName.value = ''
-    e.target.description.value = ''
+  const toggleOverlay = () => {
+    setIsOverlayOpen(!isOverlayOpen)
   }
 
   return (
-    <form onSubmit={handleFormSubmit}>
-      <div>
-        <label className="block text-gray-700 mb-2">task</label>
-        <input type='text' name='taskName' className="w-full p-2 border border-gray-300 rounded"/>
-      </div>
-      <div>
-        <label className="block text-gray-700 mb-2">details</label>
-        <textarea name='description' className="w-full p-2 border border-gray-300 rounded"></textarea>
-      </div>
-      <button type='submit' className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
-        add
-      </button>
-    </form>
+
+    <div>
+      <>
+        <button
+          className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          type="button"
+          onClick={toggleOverlay}
+        >
+          Create Task
+        </button>
+        {isOverlayOpen ? (
+          <TodoFormModal toggleOverlay={toggleOverlay}/>
+        ) : null}
+      </>
+    </div>
   )
 }
 

@@ -1,5 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { isSameDay } from "date-fns";
+import { isSameDay, startOfDay } from "date-fns";
 
 const getTasks = state => state.todo.tasks
 
@@ -7,7 +7,10 @@ export const getTasksByStatusAndDate = createSelector(
   [getTasks, (state, status) => status, (state, status, currentDate) => currentDate],
   (tasks, status, currentDate) => tasks
     .filter(task => 
-      isSameDay(currentDate, new Date(task.createDate)) && task.status === status
+      {
+      // console.log('task create date:', new Date(task.createDate))
+      return isSameDay(currentDate, new Date(task.createDate)) && task.status === status
+      }
     )
 )
 

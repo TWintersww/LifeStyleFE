@@ -9,6 +9,7 @@ import Todo from './components/Todo'
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import todoReducer from './reducers/todoReducer'
+import Login from './components/Login'
 
 const store = configureStore({
   reducer: {
@@ -31,6 +32,7 @@ function App() {
             <Route path='/' element={<Body />}>
               <Route index element={<Home />} />
               <Route path='todo' element={<Todo />} />
+              <Route path='login' element={<Login />} />
             </Route>
           </Routes>
         </Router>
