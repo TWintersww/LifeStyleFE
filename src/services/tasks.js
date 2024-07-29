@@ -2,6 +2,12 @@ import axios from 'axios'
 // const baseURL = 'http://localhost:3001/api/tasks'
 const baseURL = 'api/tasks'
 
+let token = null
+const setToken = newToken => {
+  token = `Bearer ${newToken}`
+  console.log('set tasks.js token:', token)
+}
+
 const getAll = async () => {
   const response = await axios.get(baseURL)
   // console.log('getAll response:', response)
@@ -9,7 +15,12 @@ const getAll = async () => {
 }
 
 const postNew = async (newTask) => {
-  const response = await axios.post(baseURL, newTask)
+  //make use of new token object
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const response = await axios.post(baseURL, newTask, config)
   // console.log('postNew response:', response)
   return response.data
 }
@@ -27,4 +38,4 @@ const editOne = async (editedTask) => {
   return response.data
 }
 
-export default { getAll, postNew, deleteOne, editOne }
+export default { getAll, postNew, deleteOne, editOne, setToken }
