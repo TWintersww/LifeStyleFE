@@ -2,10 +2,17 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { handleLogin } from "../../reducers/loginReducer";
 
-const LoginForm = () => {
+const LoginForm = ({setErrorMsg}) => {
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+
+  const handleNotifToggle = (errorMsg) => {
+    setErrorMsg(errorMsg)
+    setTimeout(() => {
+      setErrorMsg(null)
+    }, 3000)
+  }
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
@@ -21,7 +28,9 @@ const LoginForm = () => {
     }
     catch (error) {
       // console.log(error)
-      console.log('logging error:', error.response.data.error)
+      const errorMsg = error.response.data.error
+      console.log('logging error:', errorMsg)
+      handleNotifToggle(errorMsg)
     }
 
     setUsername('')
@@ -29,7 +38,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="flex min-h-full min-w-full flex-col justify-center items-center">
+    // <div className="flex min-h-full min-w-full flex-col justify-center items-center">
       <form 
         className="bg-blue-300 p-6 rounded-lg shadow-lg w-full max-w-xs"
         onSubmit={handleFormSubmit}
@@ -69,7 +78,7 @@ const LoginForm = () => {
           sign up
         </div>
       </form>
-    </div>
+    // </div>
   )
 }
 

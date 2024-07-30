@@ -1,6 +1,8 @@
 import BarItem from "./BarItem"
+import { useSelector } from "react-redux"
 
 const NavBar = () => {
+  const user = useSelector(state => state.login.user)
 
   return (
     <div className="h-screen flex flex-col justify-between p-4 bg-gray-200">
@@ -10,7 +12,11 @@ const NavBar = () => {
       <BarItem title='Nutrition' to='/nutrition'/>
       <BarItem title='Fitness' to='/fitness'/>
       <BarItem title='Journal' to='/journal'/>
-      <BarItem title='Login' to='/login'/>
+      {
+        user
+        ? <BarItem title='Logout' to='/logout'/>
+        : <BarItem title='Login' to='/login'/>
+      }
     </div>
   )
 }

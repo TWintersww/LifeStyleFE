@@ -1,6 +1,6 @@
 import Header from './components/Header'
 import Body from './components/Body'
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
@@ -8,13 +8,14 @@ import Home from './components/Home'
 import Todo from './components/Todo'
 import Login from './components/Login'
 
-import { Provider } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import todoReducer from './reducers/todoReducer'
 import loginReducer from './reducers/loginReducer'
 
 import { setUser } from './reducers/loginReducer'
 import tasksService from './services/tasks'
+import Logout from './components/Logout'
 
 const store = configureStore({
   reducer: {
@@ -26,6 +27,14 @@ const StyledPage = styled.div`
   display: flex;
   flex-direction: column
 `
+
+function AppWrapper() {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
+}
 
 function App() {
 
@@ -39,23 +48,27 @@ function App() {
       tasksService.setToken(user.token)
     }
   }, [])
+
+  //user determines if Routes to login page or functional components
+  const user = useSelector((state) => state.login.user)
+  console.log('App.js | user:', user)
   
   return (
-    <Provider store={store}>
-      <StyledPage>
-        <Header />
-        <Router>
-          <Routes>
-            <Route path='/' element={<Body />}>
-              <Route index element={<Home />} />
-              <Route path='todo' element={<Todo />} />
-              <Route path='login' element={<Login />} />
-            </Route>
-          </Routes>
-        </Router>
-      </StyledPage>
-    </Provider>
+    <StyledPage>
+      <Header />
+      <Router>
+        <Routes>
+          <Route path='/' element={<Body />}>
+            <Route index element={<Home />} />
+            <Route path='/todo' element={user ? <Todo /> : <Navigate replace to='/login' />} />
+
+            <Route path='/login' element={<Login />} />
+            <Route path='/logout' element={<Logout />} />
+          </Route>
+        </Routes>
+      </Router>
+    </StyledPage>
   )
 }
 
-export default App
+export default AppWrapper
