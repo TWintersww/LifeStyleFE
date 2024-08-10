@@ -4,13 +4,14 @@ import { useDispatch } from "react-redux"
 import { handleDeleteTask, handleEditTask, handleStatusChange } from "../../reducers/todoReducer"
 import { useState } from "react"
 
+const DECIMAL_NUMBER_REGEX = /^[0-9]*(\.[0-9]+)?$/
 
 const TodoItemModal = ({t, toggleOverlay}) => {
   const dispatch = useDispatch()
 
   const [taskName, setTaskName] = useState(t.taskName)
   const [description, setDescription] = useState(t.description)
-  const [hoursSpent, setHoursSpent] = useState(t.hoursSpent || 0)
+  const [hoursSpent, setHoursSpent] = useState(t.hoursSpent.toString() || "0")
 
   // console.log(taskName)
   // console.log(description)
@@ -25,13 +26,23 @@ const TodoItemModal = ({t, toggleOverlay}) => {
   }
   const handleEdit = () => {
     toggleOverlay()
-    const editedTask = {
-      ...t,
-      taskName: taskName,
-      description: description,
-      hoursSpent: hoursSpent,
+
+    try {
+      const castHoursSpent = Number(hoursSpent)
+      if (isNaN(castHoursSpent)) {
+        throw new Error("TodoItemModal | hoursSpent must be a number or decimal number")
+      }
+      const editedTask = {
+        ...t,
+        taskName: taskName,
+        description: description,
+        hoursSpent: hoursSpent,
+      }
+      dispatch(handleEditTask(editedTask))
     }
-    dispatch(handleEditTask(editedTask))
+    catch (e) {
+      console.log(e.message)
+    }
   }
 
   return (
@@ -92,7 +103,7 @@ const TodoItemModal = ({t, toggleOverlay}) => {
                   type='text' 
                   name='hoursSpent' 
                   value={hoursSpent} 
-                  onChange={e => setHoursSpent(Number(e.target.value))}
+                  onChange={e => setHoursSpent(e.target.value)}
                   className="border border-gray-300 p-2 rounded box-border flex-grow mr-4 w-12"
                 />
               </div>

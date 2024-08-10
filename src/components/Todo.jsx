@@ -12,7 +12,7 @@ import HeatMap from './todo/HeatMap'
 const Todo = () => {
 
   const dispatch = useDispatch()
-  const currentDate = useSelector(getFormattedCurrentDate)
+  const {utcTime, zonedTime} = useSelector(getFormattedCurrentDate)
   
   useEffect(() => {
     dispatch(initializeTasks())
@@ -30,7 +30,7 @@ const Todo = () => {
 
           {/* Only show TodoForm if currentDate same as today's date */}
           {
-            isSameDay(currentDate, new Date())
+            isSameDay(utcTime, (new Date()).toISOString())
             &&
             <TodoForm />
           }
@@ -51,7 +51,7 @@ const Todo = () => {
           </h2>
 
           <div>
-           <HeatMap />
+            <HeatMap />
           </div>
         
 

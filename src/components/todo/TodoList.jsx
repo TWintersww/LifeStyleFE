@@ -5,10 +5,11 @@ import { getTasksByStatusAndDate, getFormattedCurrentDate } from "../../selector
 
 const TodoList = ({status}) => {
 
-  const currentDate = useSelector(getFormattedCurrentDate)
-  const tasks = useSelector(state => getTasksByStatusAndDate(state, status, currentDate))
+  const {utcTime, zonedTime} = useSelector(getFormattedCurrentDate)
+  const tasks = useSelector(state => getTasksByStatusAndDate(state, status, zonedTime))
 
-  console.log('current date', currentDate)
+  console.log('utcTime', utcTime, 'zonedTime', zonedTime)
+  console.log('types:', typeof(utcTime), typeof(zonedTime))
   console.log(`TodoList ${status} tasks:`, tasks)
 
 

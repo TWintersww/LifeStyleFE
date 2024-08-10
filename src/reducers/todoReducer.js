@@ -38,19 +38,7 @@ export const handleDeleteTask = (id) => {
     dispatch(deleteTask(id))
   }
 }
-//DEPRECATED
-// export const handleMarkComplete = (oldTask) => {
-//   return async dispatch => {
-//     const editedTask = {
-//       ...oldTask,
-//       status: 'completed'
-//     }
-//     // console.log('editedTask:', editedTask)
-//     const editedPostedTask = await tasksService.editOne(editedTask)
-//     // console.log('editedPostedTask:', editedPostedTask)
-//     dispatch(editTask(editedPostedTask))
-//   }
-// }
+
 export const handleStatusChange = (oldTask) => {
   return async dispatch => {
     const newStatus = oldTask.status === 'todo'

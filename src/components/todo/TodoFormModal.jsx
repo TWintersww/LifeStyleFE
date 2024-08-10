@@ -10,13 +10,14 @@ const TodoFormModal = ({toggleOverlay}) => {
   const [description, setDescription] = useState('')
 
   const handleFormSubmit = () => {
+    const dateString = new Date().toISOString()
     dispatch(
       handleCreateTask({
         taskName,
         description,
         status: "todo",
         hoursSpent: 0,
-        createDate: new Date(),
+        createDate: dateString,
       }, navigate)
     )
     toggleOverlay()

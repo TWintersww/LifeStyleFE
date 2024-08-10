@@ -6,11 +6,14 @@ import { handleNextDay, handlePrevDay, setDate } from "../../reducers/todoReduce
 import { format } from "date-fns"
 import { forwardRef } from "react"
 import DatePicker from "react-datepicker"
+import { fromZonedTime } from 'date-fns-tz'
+
+const TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone
 
 const TodoDateSelector = () => {
   const dispatch = useDispatch()
-  const currentDate = useSelector(getFormattedCurrentDate)
-  const formattedDateString = format(currentDate, 'MM/dd/yyyy')
+  const {utcTime, zonedTime} = useSelector(getFormattedCurrentDate)
+  const formattedZonedTimeString = format(zonedTime, 'MM/dd/yyyy')
 
 
   const CalendarToggleButton = forwardRef(
@@ -30,12 +33,12 @@ const TodoDateSelector = () => {
         &lt;
       </button>
       <div className="flex items-center">
-        <span className="bg-indigo-500 text-white p-1 rounded-l text-1xl font-bold">
-          {formattedDateString}
+        <span className="bg-indigo-500 text-white p-1 rounded-l text-1xl text-center font-bold w-28">
+          {formattedZonedTimeString}
         </span>
         <DatePicker 
           //popup's date state is synchronized with currentDate in reducer
-          selected={currentDate}
+          selected={zonedTime}
           //popup's date change synchronized with reducer's setDate(isostring)
           onChange={(date) => dispatch(setDate(date.toISOString()))}
           customInput={<CalendarToggleButton className="bg-indigo-200 p-1 px-3 rounded-r hover:bg-indigo-300"/>}
