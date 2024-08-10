@@ -1,36 +1,40 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { handleLogin } from "../../reducers/loginReducer";
+import { handleLogin, handleErrorMsgToggle } from "../../reducers/loginReducer";
+import { useNavigate } from "react-router-dom"
 
-const LoginForm = ({setErrorMsg}) => {
+const LoginForm = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleNotifToggle = (errorMsg) => {
-    setErrorMsg(errorMsg)
-    setTimeout(() => {
-      setErrorMsg(null)
-    }, 3000)
-  }
+  // const handleNotifToggle = (errorMsg) => {
+  //   dispatch(setErrorMsg(errorMsg))
+  //   setTimeout(() => {
+  //     dispatch(setErrorMsg(null))
+  //   }, 3000)
+  // }
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
 
     if (!username || !password) {
       console.log('username and password both required')
+      dispatch(handleErrorMsgToggle('Username and password both required'))
       return
     }
 
     try {
       //If successful, the loginReducer fields are set
       await dispatch(handleLogin({username, password}))
+      navigate('/todo')
     }
     catch (error) {
       // console.log(error)
-      const errorMsg = error.response.data.error
+      const errorMsg = error.response.data.error || 'Login failed'
       console.log('logging error:', errorMsg)
-      handleNotifToggle(errorMsg)
+      dispatch(handleErrorMsgToggle(errorMsg))
     }
 
     setUsername('')
@@ -74,9 +78,9 @@ const LoginForm = ({setErrorMsg}) => {
             Next
           </button>
         </div>
-        <div>
+        {/* <div>
           sign up
-        </div>
+        </div> */}
       </form>
     // </div>
   )

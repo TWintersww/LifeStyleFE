@@ -4,12 +4,22 @@ const baseURL = 'api/tasks'
 
 let token = null
 const setToken = newToken => {
-  token = `Bearer ${newToken}`
-  console.log('set tasks.js token:', token)
+  if (!newToken) {
+    token = null;
+    console.log('set tasks.js token to NULL')
+  }
+  else {
+    token = `Bearer ${newToken}`
+    console.log('set tasks.js token:', token)
+  }
 }
 
 const getAll = async () => {
-  const response = await axios.get(baseURL)
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const response = await axios.get(baseURL, config)
   // console.log('getAll response:', response)
   return response.data
 }

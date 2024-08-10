@@ -1,7 +1,7 @@
 import Header from './components/Header'
 import Body from './components/Body'
 import { BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import Home from './components/Home'
@@ -38,6 +38,8 @@ function AppWrapper() {
 
 function App() {
 
+  const [loading, setLoading] = useState(true)
+
   //Session information from local storage
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
@@ -47,11 +49,16 @@ function App() {
       store.dispatch(setUser(user))
       tasksService.setToken(user.token)
     }
+    setLoading(false)
   }, [])
 
   //user determines if Routes to login page or functional components
   const user = useSelector((state) => state.login.user)
   console.log('App.js | user:', user)
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
   
   return (
     <StyledPage>

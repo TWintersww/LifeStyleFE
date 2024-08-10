@@ -6,9 +6,11 @@ import { useEffect } from 'react'
 import { getFormattedCurrentDate } from '../selectors/todoSelectors'
 import { isSameDay } from 'date-fns'
 import TodoDateSelector from './todo/TodoDateSelector'
+import HeatMap from './todo/HeatMap'
 
 
 const Todo = () => {
+
   const dispatch = useDispatch()
   const currentDate = useSelector(getFormattedCurrentDate)
   
@@ -47,6 +49,12 @@ const Todo = () => {
           <h2 className="text-2xl font-bold mb-4">
             logging
           </h2>
+
+          <div>
+           <HeatMap />
+          </div>
+        
+
         </div>
       </div>
     </div>

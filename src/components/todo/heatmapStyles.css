@@ -1,0 +1,40 @@
+.color-green-0 {
+  fill: #ebedf0;
+}
+.color-green-1 {
+  fill: #e6f9e6;
+}
+.color-green-2 {
+  fill: #d4f2d4;
+}
+.color-green-3 {
+  fill: #bfe9bf;
+}
+.color-green-4 {
+  fill: #a8e0a8;
+}
+.color-green-5 {
+  fill: #8fd68f;
+}
+.color-green-6 {
+  fill: #73cc73;
+}
+.color-green-7 {
+  fill: #56c056;
+}
+.color-green-8 {
+  fill: #36b336;
+}
+.color-green-9 {
+  fill: #1e991e;
+}
+.color-green-10 {
+  fill: #157815;
+}
+
+.custom .react-calendar-heatmap .react-calendar-heatmap rect {
+  stroke: #fff; /* Add stroke to separate each rect with white border */
+  stroke-width: 1px; /* Adjust stroke width */
+  margin: 2px; /* Adjust margin to ensure even spacing */
+  padding: 2px; /* Add padding if needed */
+}

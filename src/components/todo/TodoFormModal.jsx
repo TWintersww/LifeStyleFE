@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { handleCreateTask } from "../../reducers/todoReducer"
+import { useNavigate } from "react-router-dom"
 
 const TodoFormModal = ({toggleOverlay}) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [taskName, setTaskName] = useState('')
   const [description, setDescription] = useState('')
 
@@ -15,9 +17,10 @@ const TodoFormModal = ({toggleOverlay}) => {
         status: "todo",
         hoursSpent: 0,
         createDate: new Date(),
-      })
+      }, navigate)
     )
     toggleOverlay()
+
   }
 
   return (

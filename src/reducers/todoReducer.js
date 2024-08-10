@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import tasksService from '../services/tasks'
 import { addDays, startOfDay } from "date-fns"
+import { handleLogoutWithNavigate } from "./loginReducer"
 
 
 export const initializeTasks = () => {
@@ -9,12 +10,25 @@ export const initializeTasks = () => {
     dispatch(setTasks(init))
   }
 }
-export const handleCreateTask = (newTask) => {
+export const handleCreateTask = (newTask, navigate) => {
   return async dispatch => {
-    console.log('newTask:', newTask)
-    const postedTask = await tasksService.postNew(newTask)
-    console.log('postedTask:', postedTask)
-    dispatch(createTask(postedTask))
+    try {
+      console.log('newTask:', newTask)
+      const postedTask = await tasksService.postNew(newTask)
+      console.log('postedTask:', postedTask)
+      dispatch(createTask(postedTask))
+    }
+    catch (error) {
+      console.log(error.response.data.error)
+      const errorMsg = error.response.data.error
+      //if message is 'token expired', set notification and handle logout
+      if (errorMsg.includes('token expired')) {
+        dispatch(handleLogoutWithNavigate(navigate))
+      }
+      else if (errorMsg.includes('validation failed')) {
+        console.log('validation failed')
+      }
+    }
   }
 }
 export const handleDeleteTask = (id) => {
@@ -24,15 +38,29 @@ export const handleDeleteTask = (id) => {
     dispatch(deleteTask(id))
   }
 }
-export const handleMarkComplete = (oldTask) => {
+//DEPRECATED
+// export const handleMarkComplete = (oldTask) => {
+//   return async dispatch => {
+//     const editedTask = {
+//       ...oldTask,
+//       status: 'completed'
+//     }
+//     // console.log('editedTask:', editedTask)
+//     const editedPostedTask = await tasksService.editOne(editedTask)
+//     // console.log('editedPostedTask:', editedPostedTask)
+//     dispatch(editTask(editedPostedTask))
+//   }
+// }
+export const handleStatusChange = (oldTask) => {
   return async dispatch => {
+    const newStatus = oldTask.status === 'todo'
+      ? 'completed'
+      : 'todo'
     const editedTask = {
       ...oldTask,
-      status: 'completed'
+      status: newStatus
     }
-    // console.log('editedTask:', editedTask)
     const editedPostedTask = await tasksService.editOne(editedTask)
-    // console.log('editedPostedTask:', editedPostedTask)
     dispatch(editTask(editedPostedTask))
   }
 }

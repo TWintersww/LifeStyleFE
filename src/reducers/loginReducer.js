@@ -14,20 +14,53 @@ export const handleLogin = (credentials) => {
   }
 }
 
+export const handleLogout = () => {
+  return dispatch => {
+    dispatch(setUser(null))
+    window.localStorage.removeItem('loggedInUser')
+    tasksService.setToken(null)
+  }
+}
+
+export const handleLogoutWithNavigate = (navigate) => {
+  return dispatch => {
+    dispatch(setUser(null))
+    window.localStorage.removeItem('loggedInUser')
+
+    navigate('/login')
+
+    dispatch(handleErrorMsgToggle('Session expired. Please login again'))
+  }
+}
+
+export const handleErrorMsgToggle = (errorMsg) => {
+  return dispatch => {
+    dispatch(setErrorMsg(errorMsg))
+    setTimeout(() => {
+      dispatch(setErrorMsg(null))
+    }, 3000)
+  }
+}
+
 const loginSlice = createSlice({
   name: 'login',
   initialState: {
     user: null,
     loginTime: null,
+    errorMsg: null,
   },
   reducers: {
     setUser(state, action) {
       state.user = action.payload
+    },
+    setErrorMsg(state, action) {
+      state.errorMsg = action.payload
     }
   }
 })
 
 export const {
-  setUser
+  setUser,
+  setErrorMsg,
 } = loginSlice.actions
 export default loginSlice.reducer
