@@ -1,4 +1,3 @@
-import Header from './components/Header'
 import Body from './components/Body'
 import { BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom'
 import { useEffect, useState } from 'react'
@@ -15,7 +14,14 @@ import loginReducer from './reducers/loginReducer'
 
 import { setUser } from './reducers/loginReducer'
 import tasksService from './services/tasks'
+import journalService from './services/journal'
 import Logout from './components/Logout'
+
+import JournalContainer from './components/JournalContainer'
+import JournalHome from './components/journal/JournalHome'
+import CreatePost from './components/journal/CreatePost'
+import EditPost from './components/journal/EditPost'
+import PostFull from './components/journal/PostFull'
 
 const store = configureStore({
   reducer: {
@@ -48,6 +54,7 @@ function App() {
       console.log('retained current session information for:', user.username)
       store.dispatch(setUser(user))
       tasksService.setToken(user.token)
+      journalService.setToken(user.token)
     }
     setLoading(false)
   }, [])
@@ -62,12 +69,17 @@ function App() {
   
   return (
     <StyledPage>
-      <Header />
       <Router>
         <Routes>
           <Route path='/' element={<Body />}>
             <Route index element={<Home />} />
             <Route path='/todo' element={user ? <Todo /> : <Navigate replace to='/login' />} />
+            <Route path='/journal' element={user ? <JournalContainer /> : <Navigate replace to='/login' />} >
+              <Route index element={<JournalHome />} />
+              <Route path='create' element={<CreatePost />} />
+              <Route path='edit/:id' element={<EditPost />} />
+              <Route path='view/:id' element={<PostFull />} />
+            </Route>
 
             <Route path='/login' element={<Login />} />
             <Route path='/logout' element={<Logout />} />

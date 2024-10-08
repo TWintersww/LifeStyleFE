@@ -6,8 +6,14 @@ const Body = () => {
 
   return (
     <div className='body'>
-        <NavBar />
-        <Outlet />
+      <div className="flex w-full h-full">
+        <div className="w-64">
+          <NavBar />
+        </div>
+        <div className="flex-1 flex items-center justify-center">
+          <Outlet />
+        </div>
+      </div>
     </div>
   )
 }

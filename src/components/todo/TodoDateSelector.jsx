@@ -28,12 +28,12 @@ const TodoDateSelector = () => {
     <div className="w-full flex justify-center items-center">
       <button 
         onClick={() => dispatch(handlePrevDay())}
-        className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
+        className="bg-gray-400 text-white py-1 px-3 rounded hover:bg-gray-600"
       >
         &lt;
       </button>
       <div className="flex items-center">
-        <span className="bg-indigo-500 text-white p-1 rounded-l text-1xl text-center font-bold w-28">
+        <span className="bg-gray-600 text-white p-1 rounded-l text-1xl text-center font-bold w-28">
           {formattedZonedTimeString}
         </span>
         <DatePicker 
@@ -41,12 +41,12 @@ const TodoDateSelector = () => {
           selected={zonedTime}
           //popup's date change synchronized with reducer's setDate(isostring)
           onChange={(date) => dispatch(setDate(date.toISOString()))}
-          customInput={<CalendarToggleButton className="bg-indigo-200 p-1 px-3 rounded-r hover:bg-indigo-300"/>}
+          customInput={<CalendarToggleButton className="bg-gray-300 p-1 px-3 rounded-r hover:bg-indigo-300"/>}
         />
       </div>
       <button 
         onClick={() => dispatch(handleNextDay())}
-        className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
+        className="bg-gray-400 text-white py-1 px-3 rounded hover:bg-gray-600"
       >
         &gt;
       </button>

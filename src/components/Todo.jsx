@@ -7,6 +7,7 @@ import { getFormattedCurrentDate } from '../selectors/todoSelectors'
 import { isSameDay } from 'date-fns'
 import TodoDateSelector from './todo/TodoDateSelector'
 import HeatMap from './todo/HeatMap'
+import TDLStats from './todo/TDLStats'
 
 
 const Todo = () => {
@@ -19,10 +20,10 @@ const Todo = () => {
   }, [])
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full mt-20">
       <TodoDateSelector />
 
-      <div className="flex justify-between p-4">
+      <div className="flex justify-between p-4 mt-5">
         <div className="flex-1">
           <h2 className="text-2xl font-bold mb-4">
             todo
@@ -37,6 +38,8 @@ const Todo = () => {
           <TodoList status='todo'/>
 
         </div>
+
+
         <div className="flex-1">
           <h2 className="text-2xl font-bold mb-4">
             completed
@@ -52,6 +55,7 @@ const Todo = () => {
 
           <div>
             <HeatMap />
+            <TDLStats />
           </div>
         
 

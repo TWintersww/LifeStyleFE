@@ -36,7 +36,10 @@ const postNew = async (newTask) => {
 }
 
 const deleteOne = async (id) => {
-  const response = await axios.delete(`${baseURL}/${id}`)
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await axios.delete(`${baseURL}/${id}`, config)
   console.log('deleteOne response:', response)
   return response.data
 }

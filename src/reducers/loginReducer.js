@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import loginService from '../services/login'
 import tasksService from '../services/tasks'
+import journalService from '../services/journal'
 
 export const handleLogin = (credentials) => {
   return async dispatch => {
@@ -10,6 +11,7 @@ export const handleLogin = (credentials) => {
       'loggedInUser', JSON.stringify(loggedInUser)
     )
     tasksService.setToken(loggedInUser.token)
+    journalService.setToken(loggedInUser.token)
     dispatch(setUser(loggedInUser))
   }
 }
@@ -19,6 +21,7 @@ export const handleLogout = () => {
     dispatch(setUser(null))
     window.localStorage.removeItem('loggedInUser')
     tasksService.setToken(null)
+    journalService.setToken(null)
   }
 }
 

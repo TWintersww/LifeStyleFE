@@ -68,13 +68,13 @@ const TodoItemModal = ({t, toggleOverlay}) => {
               />
               <div>
                 <button
-                  className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm w-12 h-12 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  className="bg-blue-950 text-white active:bg-black font-bold uppercase text-sm w-12 h-12 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   onClick={handleDelete}
                 >
                   <FontAwesomeIcon icon={faTrash}/>
                 </button>
                 <button
-                  className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button"
                   onClick={handleSC}
                 >
@@ -93,9 +93,7 @@ const TodoItemModal = ({t, toggleOverlay}) => {
 
               </textarea>
             </div>
-            {/*ONLY COMPLETED: time spent*/}
-            { t.status === 'completed' && 
-              <div className="relative w-full px-6 py-2 flex-auto">
+            <div className="relative w-full px-6 py-2 flex-auto">
                 <span className="pr-2">
                   Hours spent: 
                 </span>
@@ -107,18 +105,17 @@ const TodoItemModal = ({t, toggleOverlay}) => {
                   className="border border-gray-300 p-2 rounded box-border flex-grow mr-4 w-12"
                 />
               </div>
-            }
             {/*footer*/}
             <div className="flex items-center justify-between p-6 border-t border-solid border-blueGray-200 rounded-b">
               <button
-                className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 flex-1"
+                className="text-blue-800 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 flex-1"
                 type="button"
                 onClick={toggleOverlay}
               >
                 Close
               </button>
               <button
-                className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 flex-1"
+                className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 flex-1"
                 type="button"
                 onClick={handleEdit}
               >

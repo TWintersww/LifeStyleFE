@@ -42,7 +42,7 @@ const LoginForm = () => {
   }
 
   return (
-    // <div className="flex min-h-full min-w-full flex-col justify-center items-center">
+    <div className="flex min-h-full min-w-full flex-col justify-center items-center">
       <form 
         className="bg-blue-300 p-6 rounded-lg shadow-lg w-full max-w-xs"
         onSubmit={handleFormSubmit}
@@ -82,7 +82,7 @@ const LoginForm = () => {
           sign up
         </div> */}
       </form>
-    // </div>
+      </div>
   )
 }
 

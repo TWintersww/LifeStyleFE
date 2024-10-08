@@ -2,7 +2,7 @@
 const Home = () => {
 
   return (
-    <div>
+    <div className="w-full max-w-xs">
       Good morning! How are you?
     </div>
   )
