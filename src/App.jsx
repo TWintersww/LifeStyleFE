@@ -15,13 +15,13 @@ import loginReducer from './reducers/loginReducer'
 import { setUser } from './reducers/loginReducer'
 import tasksService from './services/tasks'
 import journalService from './services/journal'
-import Logout from './components/Logout'
 
 import JournalContainer from './components/JournalContainer'
 import JournalHome from './components/journal/JournalHome'
 import CreatePost from './components/journal/CreatePost'
 import EditPost from './components/journal/EditPost'
 import PostFull from './components/journal/PostFull'
+import SignUp from './components/SignUp'
 
 const store = configureStore({
   reducer: {
@@ -82,7 +82,7 @@ function App() {
             </Route>
 
             <Route path='/login' element={<Login />} />
-            <Route path='/logout' element={<Logout />} />
+            <Route path='/signup' element={<SignUp />} />
           </Route>
         </Routes>
       </Router>

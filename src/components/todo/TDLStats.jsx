@@ -11,7 +11,7 @@ const TDLStats = () => {
 
   //All dates in [] are ahead by 1 day. Shift back for week calculation
   const hoursMap = HeatMapHelpers.getHoursMap(sameMonthTasks, monthStartOffset1, numDaysInMonth);
-  console.log('TDLStats', hoursMap)
+  // console.log('TDLStats', hoursMap)
 
   const stats = {
     daysLoggedMonth: 0,
@@ -31,7 +31,10 @@ const TDLStats = () => {
       }
     }
   }
-  console.log('TDLStats stats', stats)
+  // console.log('TDLStats stats', stats)
+
+  const monthlyAvg = stats.daysLoggedMonth === 0 ? 0 : (stats.totalHoursInMonth / stats.daysLoggedMonth).toFixed(2)
+  const weeklyAvg = stats.daysLoggedWeek === 0 ? 0 : (stats.totalHoursInWeek / stats.daysLoggedWeek).toFixed(2)
 
   
 
@@ -47,10 +50,10 @@ const TDLStats = () => {
         Weekly Hours Logged: {stats.totalHoursInWeek}
       </div>
       <div>
-        Monthly Average Hours: {(stats.totalHoursInMonth / stats.daysLoggedMonth).toFixed(2)}
+        Monthly Average Hours: {monthlyAvg}
       </div>
       <div>
-        Weekly Average Hours: {(stats.totalHoursInWeek / stats.daysLoggedWeek).toFixed(2)}
+        Weekly Average Hours: {weeklyAvg}
       </div>
     </div>
   )

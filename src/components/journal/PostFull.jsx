@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router-dom"
 import journalService from "../../services/journal"
 import { format } from "date-fns"
 
-const baseURL = import.meta.env.VITE_API_URL
 
 const PostFull = () => {
 
@@ -39,7 +38,7 @@ const PostFull = () => {
         >
         </img> */}
         <img 
-          src={`${baseURL}/${post.coverimg}`}
+          src={post.coverimg}
           className="object-cover object-center w-full h-full absolute"
         >
         </img>

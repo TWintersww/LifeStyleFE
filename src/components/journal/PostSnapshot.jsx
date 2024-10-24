@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom"
 import { format } from "date-fns"
 
-const baseURL = import.meta.env.VITE_API_URL
-
 const PostSnapshot = ({title, summary, coverimg, createdAt, id}) => {
 
   return (
@@ -10,7 +8,8 @@ const PostSnapshot = ({title, summary, coverimg, createdAt, id}) => {
       <div className="w-80 h-52 overflow-hidden relative">
         <Link to={`/journal/view/${id}`}>
           {/* <img className="w-full h-full object-cover absolute top-0 left-0" src={`http://localhost:3001/${coverimg}`}></img> */}
-          <img className="w-full h-full object-cover absolute top-0 left-0" src={`${baseURL}/${coverimg}`}></img>
+          {/* <img className="w-full h-full object-cover absolute top-0 left-0" src={`${baseURL}/${coverimg}`}></img> */}
+          <img className="w-full h-full object-cover absolute top-0 left-0" src={coverimg}></img>
         </Link>
       </div>
       

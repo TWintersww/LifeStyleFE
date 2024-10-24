@@ -38,10 +38,20 @@ export const handleLogoutWithNavigate = (navigate) => {
 
 export const handleErrorMsgToggle = (errorMsg) => {
   return dispatch => {
+    dispatch(setNotifMsg(null))
     dispatch(setErrorMsg(errorMsg))
     setTimeout(() => {
       dispatch(setErrorMsg(null))
     }, 3000)
+  }
+}
+export const handleNotifMsgToggle = (notifMsg) => {
+  return dispatch => {
+    dispatch(setErrorMsg(null))
+    dispatch(setNotifMsg(notifMsg))
+    setTimeout(() => {
+      dispatch(setNotifMsg(null))
+    }, 5000)
   }
 }
 
@@ -51,6 +61,7 @@ const loginSlice = createSlice({
     user: null,
     loginTime: null,
     errorMsg: null,
+    notifMsg: null,
   },
   reducers: {
     setUser(state, action) {
@@ -58,6 +69,9 @@ const loginSlice = createSlice({
     },
     setErrorMsg(state, action) {
       state.errorMsg = action.payload
+    },
+    setNotifMsg(state, action) {
+      state.notifMsg = action.payload
     }
   }
 })
@@ -65,5 +79,6 @@ const loginSlice = createSlice({
 export const {
   setUser,
   setErrorMsg,
+  setNotifMsg,
 } = loginSlice.actions
 export default loginSlice.reducer

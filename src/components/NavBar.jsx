@@ -1,9 +1,16 @@
+import { useState } from "react"
 import { Link, NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
+import LogoutModal from "./LogoutModal"
 
 const NavBar = () => {  
   const user = useSelector(state => state.login.user) 
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
   // console.log('user', user) 
+
+  const toggleLogoutModal = () => {
+    setShowLogoutModal(!showLogoutModal)
+  }
   
   
   return (
@@ -69,16 +76,18 @@ const NavBar = () => {
                       {
                         user
                         ?
-                        <Link to='/logout' className="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 hover:text-white rounded-lg hover:bg-gray-500 group">
+                        <button className="flex items-center w-full px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 hover:text-white rounded-lg hover:bg-gray-500 group"
+                          onClick={toggleLogoutModal}
+                        >
                           <svg className="flex-shrink-0 w-5 h-5 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                             <path 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round" 
-                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" 
+                              strokeLinecap="round" 
+                              strokeLinejoin="round" 
+                              d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" 
                             />
                           </svg>
                           Logout
-                        </Link>
+                        </button>
                         :
                         <Link to='/login' className="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 hover:text-white rounded-lg hover:bg-gray-500 group">
                           <svg className="flex-shrink-0 w-5 h-5 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -93,7 +102,7 @@ const NavBar = () => {
                       }
                   </nav>
                   <nav className="flex-1 space-y-2">
-                      <a href="#" className="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 hover:text-white rounded-lg hover:bg-gray-500 group">
+                      {/* <Link to='/signup' className="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 hover:text-white rounded-lg hover:bg-gray-500 group">
                           <svg className="flex-shrink-0 w-5 h-5 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                             <path 
                                 strokeLinecap="round" 
@@ -107,11 +116,43 @@ const NavBar = () => {
                             ? <h3>{user.username}</h3>
                             : <h3>Sign Up</h3>
                           }
-                      </a>
+                      </Link> */}
+                      {
+                        user
+                        ? (
+                        <Link to='/' className="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 hover:text-white rounded-lg hover:bg-gray-500 group">
+                          <svg className="flex-shrink-0 w-5 h-5 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" 
+                            />
+                          </svg>
+                          <h3>{user.username}</h3>
+                        </Link>
+                        )
+                        : (
+                        <Link to='/signup' className='flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 hover:text-white rounded-lg hover:bg-gray-500 group'>
+                          <svg className="flex-shrink-0 w-5 h-5 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" 
+                            />
+                          </svg>
+                          <h3>Sign Up</h3>
+                        </Link>
+                        )
+                      }
                   </nav>
               </div>
           </div>
       </div>
+
+
+      {showLogoutModal && (
+        <LogoutModal toggleLogoutModal={toggleLogoutModal}/>
+      )}
   </div>
 
   )

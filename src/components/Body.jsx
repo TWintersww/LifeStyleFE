@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom"
 const Body = () => {
 
   return (
-    <div className='body'>
+    <div className='body w-full h-full'>
       <div className="flex w-full h-full">
         <div className="w-64">
           <NavBar />

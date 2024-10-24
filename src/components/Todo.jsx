@@ -30,11 +30,12 @@ const Todo = () => {
           </h2>
 
           {/* Only show TodoForm if currentDate same as today's date */}
-          {
+          {/* {
             isSameDay(utcTime, (new Date()).toISOString())
             &&
             <TodoForm />
-          }
+          } */}
+          <TodoForm />
           <TodoList status='todo'/>
 
         </div>

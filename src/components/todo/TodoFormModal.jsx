@@ -1,23 +1,40 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
+import { getFormattedCurrentDate } from "../../selectors/todoSelectors"
 import { handleCreateTask } from "../../reducers/todoReducer"
 import { useNavigate } from "react-router-dom"
 
 const TodoFormModal = ({toggleOverlay}) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  //utcTime is ISO UTCtime displayed by TodoDateSelector. Matches with displayed date
+  const {utcTime} = useSelector(getFormattedCurrentDate)
   const [taskName, setTaskName] = useState('')
   const [description, setDescription] = useState('')
 
   const handleFormSubmit = () => {
-    const dateString = new Date().toISOString()
+    // Old Version: Create task based on current time.
+    // const dateString = new Date().toISOString()
+    // dispatch(
+    //   handleCreateTask({
+    //     taskName,
+    //     description,
+    //     status: "todo",
+    //     hoursSpent: 0,
+    //     createDate: dateString,
+    //   }, navigate)
+    // )
+    // const dateString = new Date().toISOString()
+
+    //New Version: Create task based on current time + offset # days depending on TodoDateSelector date
     dispatch(
       handleCreateTask({
         taskName,
         description,
         status: "todo",
         hoursSpent: 0,
-        createDate: dateString,
+        createDate: utcTime,
       }, navigate)
     )
     toggleOverlay()

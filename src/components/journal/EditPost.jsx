@@ -2,9 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Navigate, useParams, useNavigate } from 'react-router-dom'
 import QuillEditor from './QuillEditor'
 import journalService from '../../services/journal'
-import axios from 'axios'
 
-const baseURL = import.meta.env.VITE_API_URL
 
 const EditPost = () => {
   const {id} = useParams()
@@ -13,6 +11,7 @@ const EditPost = () => {
   const [summary, setSummary] = useState('')
   const [content, setContent] = useState('')
   const [coverimg, setCoverimg] = useState('')
+  //preview holds s3URI
   const [preview, setPreview] = useState('')
   const [redirect, setRedirect] = useState(false)
 
@@ -29,29 +28,12 @@ const EditPost = () => {
           const contentForEditing = post.content.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
           setContent(contentForEditing)
         }
-        else {
-          setContent(post.content)
-        }
 
         if (post.coverimg) {
-          // const imageURL = `http://localhost:3001/${post.coverimg}`
-          const imageURL = `${baseURL}/${post.coverimg}`
-          axios.get(imageURL, {responseType: 'blob'})
-            .then(res => {
-              const f = new File([res.data], post.coverimg, { type: res.data.type })
-              setCoverimg(f)
-              setPreview(URL.createObjectURL(f))
-            })
+          setPreview(post.coverimg)
         }
       })
   }, [id])
-  useEffect(() => {
-    return () => {
-      if (preview) {
-        URL.revokeObjectURL(preview)
-      }
-    }
-  }, [preview])
 
   const handleEditPost = async (e) => {
     // console.log('handleEditPost')
@@ -61,7 +43,18 @@ const EditPost = () => {
     data.set('title', title)
     data.set('summary', summary)
     data.set('content', content)
-    data.set('coverimg', coverimg)
+
+    /*
+    If user uploads new image: set 'coverimg' field
+    Else: set 'existingCoverimg' with preview, which holds old s3URI
+    */
+    if (coverimg) {
+      data.set('coverimg', coverimg)
+    }
+    else {
+      //preview holds s3URI of old image
+      data.set('existingCoverimg', preview)
+    }
 
     try {
       const response = await journalService.editOne(id, data)
@@ -108,7 +101,7 @@ const EditPost = () => {
       />
 
       <div className="w-full p-4 border border-gray-300 rounded-md focus:outline-none">
-        <button className="mb-4 bg-gray-400 text-white active:bg-gray-600 text-m px-2 py-1.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type='button' onClick={() => fileInputRef.current.click()}>{coverimg ? 'Change Image (required)' : 'Choose Image (required)'}</button>
+        <button className="mb-4 bg-gray-400 text-white active:bg-gray-600 text-m px-2 py-1.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type='button' onClick={() => fileInputRef.current.click()}>{coverimg ? 'Change Image' : 'Choose Image (required)'}</button>
         {
           preview
           ? <img src={preview} alt="Image Preview" style={{ width: '200px', height: '200px', objectFit: 'cover', border: '1px solid #ddd' }} />
